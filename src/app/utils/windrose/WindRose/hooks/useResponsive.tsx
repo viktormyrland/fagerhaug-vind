@@ -7,7 +7,7 @@ export default function useResponsive(
   const [size, setSize] = React.useState(initSize);
   const observer = React.useRef(
     new ResizeObserver((entries) => {
-      const { width, height } = entries[0].contentRect;
+      const { width, height } = entries[0]!.contentRect;
       setSize({ width, height });
     }),
   );
