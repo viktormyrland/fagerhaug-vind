@@ -16,7 +16,7 @@ export const classifyDir = (direction: number): Direction => {
   if (direction < 0 || direction >= 360) {
     throw new Error("Direction out of valid range (0-359).");
   }
-  const dTh = 11.25;
+  const dTh = 22.5; //11.25;
   const index = Math.floor((direction + dTh / 2) / dTh);
   const directions = [
     Direction.N,

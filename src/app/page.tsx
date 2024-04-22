@@ -2,7 +2,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { getWindData } from "./utils/PageActions";
 import { type TimeSpan, type WindData } from "./utils/types";
-import { type ChartData, calculateWindRose } from "./utils/WindRoseUtils";
+import {
+  type ChartData,
+  calculateWindRose,
+  classifyDir,
+} from "./utils/WindRoseUtils";
 import Dropdown, { type Option } from "react-dropdown";
 import { WindroseChart } from "./utils/windrose";
 import "react-dropdown/style.css";
@@ -150,6 +154,7 @@ export default function HomePage() {
           </h1>
           <LineChartComponent windData={windData?.wind_histogram ?? null} />
         </div>
+        <span>Laget med ❤ av Viktor</span>
       </div>
     </main>
   );
