@@ -60,8 +60,8 @@ export interface ChartPropTypes extends React.HTMLProps<HTMLDivElement> {
   chartData: ChartData[];
   // columns: string[];
   columns: string[];
-  /* width: number;
-  height: number; */
+  width: number;
+  height: number;
   responsive: boolean;
   legendGap: number;
 }

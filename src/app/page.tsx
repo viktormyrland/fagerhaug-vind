@@ -128,7 +128,7 @@ export default function HomePage() {
           </div>
           <div className="flex w-full max-w-[400px] items-center overflow-hidden rounded-lg border border-slate-600 bg-white">
             {windRoseChartData && (
-              <div className="relative max-w-[400px]">
+              <div className="relative w-[400px]">
                 <h1 className="absolute top-5 w-full text-center text-xl font-bold text-black">
                   Vindrose siste {timeSpan} minutter
                 </h1>
@@ -136,6 +136,8 @@ export default function HomePage() {
                   chartData={windRoseChartData}
                   columns={WINDROSE_COLS}
                   legendGap={0}
+                  width={400}
+                  height={400}
                   responsive={true}
                 ></WindroseChart>
               </div>
