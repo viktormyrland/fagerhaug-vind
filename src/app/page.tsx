@@ -2,11 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { getWindData } from "./utils/PageActions";
 import { type TimeSpan, type WindData } from "./utils/types";
-import {
-  type ChartData,
-  calculateWindRose,
-  classifyDir,
-} from "./utils/WindRoseUtils";
+import { type ChartData, calculateWindRose } from "./utils/WindRoseUtils";
 import Dropdown, { type Option } from "react-dropdown";
 import { WindroseChart } from "./utils/windrose";
 import "react-dropdown/style.css";
@@ -111,7 +107,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="flex w-full flex-row flex-wrap items-start justify-center gap-3">
-          <div className="relative flex w-[300px] w-full flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
+          <div className="relative flex w-[300px] flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
             <h1 className="z-20 w-full text-center text-lg font-bold text-black">
               Maks vindkast siste {timeSpan} minutter
             </h1>
