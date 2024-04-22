@@ -8,7 +8,7 @@
 // @ts-nocheck
 import React from "react";
 import * as d3 from "d3";
-import { ChartPropTypes, ChartDefaultProps, DataType } from "../Types";
+import { type ChartPropTypes, type DataType } from "../Types";
 import useResponsive from "./hooks/useResponsive";
 
 export function Chart(props: ChartPropTypes) {
@@ -39,7 +39,14 @@ export function Chart(props: ChartPropTypes) {
     } else {
       setSize({ width: propWidth, height: propHeight });
     }
-  }, [responsive, axisContainerRef, containerSize.width]);
+  }, [
+    responsive,
+    axisContainerRef,
+    containerSize.width,
+    containerSize,
+    propWidth,
+    propHeight,
+  ]);
   React.useEffect(() => {
     const { current } = containerRef;
     if (current === null) return;
@@ -220,7 +227,7 @@ export function Chart(props: ChartPropTypes) {
       .text((d) => d)
       .style("font-size", 12);
     g.exit().remove();
-  }, [containerSize.width]);
+  }, [columns, containerSize.width, data, legendGap, size]);
   return (
     <div
       style={{ width: "100%", height: "auto", aspectRatio: "1/1" }}
@@ -236,5 +243,3 @@ export function Chart(props: ChartPropTypes) {
     </div>
   );
 }
-
-Chart.defaultProps = ChartDefaultProps;
