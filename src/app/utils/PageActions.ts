@@ -4,9 +4,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 "use server";
-
 /* import { Client } from "@elastic/elasticsearch"; */
-import { type WindData, type WindMinuteInformation } from "./types";
+import { type WindData, type WindEntryInformation } from "./types";
 
 const API_KEY = "eDIydF9JNEJFYjYzTXN2YTdKNzQ6S2p0YjRvMHhTNXV1Z2dwWExMUC10QQ==";
 
@@ -41,7 +40,7 @@ export const getWindData = async (minutes: number) => {
       time_buckets: {
         date_histogram: {
           field: "@timestamp",
-          interval: "1m",
+          interval: "10s",
           extended_bounds: {
             min: startDate.getTime(),
             max: endDate.getTime(),
@@ -61,6 +60,21 @@ export const getWindData = async (minutes: number) => {
               ],
               _source: {
                 includes: ["gust", "direction", "@timestamp"], // Include gust and direction fields in the results
+              },
+            },
+          },
+          min_wind: {
+            top_hits: {
+              size: 1, // We only need the top one document
+              sort: [
+                {
+                  gust: {
+                    order: "asc",
+                  },
+                },
+              ],
+              _source: {
+                includes: ["wind"], // Include gust
               },
             },
           },
@@ -109,6 +123,7 @@ export const getWindData = async (minutes: number) => {
   });
 
   const responseData = await response.json();
+
   const wind_histogram = (
     responseData.aggregations.time_buckets.buckets.map((bucket) => {
       return {
@@ -125,8 +140,8 @@ export const getWindData = async (minutes: number) => {
             ? bucket.max_gust.hits.hits[0]._source["@timestamp"]
             : undefined,
         },
-      } as WindMinuteInformation;
-    }) as WindMinuteInformation[]
+      } as WindEntryInformation;
+    }) as WindEntryInformation[]
   ).filter(
     (wmi) =>
       wmi.max_gust.direction !== undefined && wmi.max_gust.value !== undefined,
@@ -143,6 +158,7 @@ export const getWindData = async (minutes: number) => {
         responseData.aggregations.max_gust.hits.hits[0]._source["@timestamp"],
     },
     wind_histogram,
+    timestamp: new Date(),
   };
   /* console.log(returnData); */
 

@@ -11,7 +11,7 @@ import * as d3 from "d3";
 import { type ChartPropTypes, type DataType } from "../Types";
 import useResponsive from "./hooks/useResponsive";
 
-export function Chart(props: ChartPropTypes) {
+export function WindroseChart(props: ChartPropTypes) {
   const {
     width: propWidth,
     height: propHeight,
@@ -35,7 +35,7 @@ export function Chart(props: ChartPropTypes) {
     const { width, height } = containerSize;
     if (responsive) {
       const rect = Math.min(width, height);
-      setSize({ width: rect, height: rect });
+      setSize({ width: rect, height: rect + 4 * 20 + 80 }); // add for legend
     } else {
       setSize({ width: propWidth, height: propHeight });
     }
@@ -54,10 +54,10 @@ export function Chart(props: ChartPropTypes) {
     const svg = d3.select(containerRef.current);
     svg.selectAll("*").remove();
     const margin = { top: 40, right: 80, bottom: 40, left: 40 };
-    const innerRadius = 20;
+    const innerRadius = 10;
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
-    const outerRadius = Math.min(chartWidth, chartHeight) / 2.4 - legendGap / 2;
+    const outerRadius = Math.min(chartWidth, chartHeight) / 2.0 - legendGap / 2;
     const g = svg
       .append("g")
       .attr("transform", `translate(${width / 2},${height / 2})`);
@@ -77,7 +77,7 @@ export function Chart(props: ChartPropTypes) {
       .range([innerRadius, outerRadius]);
     const z = d3
       .scaleOrdinal()
-      .range([
+      /* .range([
         "#8e44ad",
         "#4242f4",
         "#42c5f4",
@@ -87,7 +87,7 @@ export function Chart(props: ChartPropTypes) {
         "#f4e242",
         "#f4a142",
         "#f44242",
-      ]);
+      ]); */ .range(["#42c5f4", "#adf442", "#f4e242", "#f44242"]);
     x.domain(data.map((d) => String(d.angle)));
     // xGroup.domain(columns.map((d) => d));
     y.domain([
@@ -167,9 +167,9 @@ export function Chart(props: ChartPropTypes) {
           : "rotate(-90)translate(0,-9)",
       )
       .attr("transform", "rotate(90)translate(0,-9)")
-      .text((d) => d.angle)
-      .style("font-size", 14);
-    g.selectAll(".axis")
+      .text((d) => (d.angle.length === 3 ? "" : d.angle))
+      .style("font-size", 15);
+    /* g.selectAll(".axis")
       .data(d3.range(angle.domain()[1]))
       .enter()
       .append("g")
@@ -180,7 +180,7 @@ export function Chart(props: ChartPropTypes) {
           // @ts-ignore
           .axisLeft()
           .scale(radius.copy().range([-innerRadius, -(outerRadius + 10)])),
-      );
+      ); */
     const yAxis = g.append("g").attr("text-anchor", "middle");
     const yTick = yAxis
       .selectAll("g")
@@ -193,24 +193,31 @@ export function Chart(props: ChartPropTypes) {
       .attr("stroke", "gray")
       .attr("stroke-dasharray", "4,4")
       .attr("r", y);
-    yTick
+    /* yTick
       .append("text")
       .attr("y", (d) => -y(d))
       .attr("dy", "-0.35em")
       .attr("x", () => -10)
       .text(y.tickFormat(5, "s"))
-      .style("font-size", 14);
+      .style("font-size", 12); */
     const legend = g
       .append("g")
       .selectAll("g")
       .data(columns.slice(1).reverse())
       .enter()
       .append("g")
-      .attr(
+      /* .attr(
         "transform",
         (d, i) =>
           `translate(${outerRadius + 45 + legendGap / 2},${
             -outerRadius + 40 + (i - (columns.length - 1) / 2) * 20
+          })`,
+      ); */
+      .attr(
+        "transform",
+        (d, i) =>
+          `translate(${0 + -20 + legendGap / 2},${
+            outerRadius + 100 + (i - (columns.length - 1) / 2) * 20
           })`,
       );
     legend
@@ -224,7 +231,7 @@ export function Chart(props: ChartPropTypes) {
       .attr("x", 24)
       .attr("y", 9)
       .attr("dy", "0.35em")
-      .text((d) => d)
+      .text((d) => d + " kn.")
       .style("font-size", 12);
     g.exit().remove();
   }, [columns, containerSize.width, data, legendGap, size]);

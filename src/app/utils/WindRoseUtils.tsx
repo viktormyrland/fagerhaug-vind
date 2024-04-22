@@ -1,4 +1,4 @@
-import { Count, Direction } from "./windrose/Types";
+import { type Count, Direction } from "./windrose/Types";
 
 const countPush = (count: Count, dir: Direction, speed: number) => {
   if (speed < 7) {
@@ -51,7 +51,7 @@ export type ChartData = {
 };
 
 export function calculateWindRose(data: Data): ChartData[] {
-  console.log("direction", data.direction);
+  /*  console.log("direction", data.direction); */
   if (data.direction.length !== data.speed.length) {
     throw new Error("Direction and speed arrays must be of the same length.");
   }

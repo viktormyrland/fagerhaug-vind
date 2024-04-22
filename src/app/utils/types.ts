@@ -7,15 +7,16 @@ export type ReturnData = {
 };
 
 export type WindData = {
+  timestamp: Date;
   maxGust: {
     value: number;
     direction: number;
     timestamp: Date;
   };
-  wind_histogram: WindMinuteInformation[];
+  wind_histogram: WindEntryInformation[];
 };
 
-export type WindMinuteInformation = {
+export type WindEntryInformation = {
   timestamp: Date;
   avg_wind: number;
   max_gust: {
