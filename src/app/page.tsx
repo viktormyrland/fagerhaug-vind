@@ -106,9 +106,9 @@ export default function HomePage() {
             </span>
           </div>
         </div>
-        <div className="flex w-full flex-row flex-wrap items-start justify-center gap-3">
-          <div className="relative flex w-[300px] flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
-            <h1 className="z-20 w-full text-center text-lg font-bold text-black">
+        <div className="flex w-full flex-row flex-wrap items-stretch justify-center gap-3">
+          <div className="relative flex w-[400px] flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
+            <h1 className="z-20 mt-4 w-full text-center text-lg font-bold text-black">
               Maks vindkast siste {timeSpan} minutter
             </h1>
             <GaugeChartComponent windData={windData ?? null} />
@@ -126,17 +126,15 @@ export default function HomePage() {
               {windData && degreesToCardinal(windData.maxGust.direction)}){" "}
             </span>
           </div>
-          <div className="flex w-full max-w-[600px] items-center overflow-hidden rounded-lg border border-slate-600 bg-white">
+          <div className="flex w-full max-w-[400px] items-center overflow-hidden rounded-lg border border-slate-600 bg-white">
             {windRoseChartData && (
-              <div className="relative w-full max-w-[600px]">
+              <div className="relative max-w-[400px]">
                 <h1 className="absolute top-5 w-full text-center text-xl font-bold text-black">
                   Vindrose siste {timeSpan} minutter
                 </h1>
                 <WindroseChart
                   chartData={windRoseChartData}
                   columns={WINDROSE_COLS}
-                  width={600}
-                  height={700}
                   legendGap={0}
                   responsive={true}
                 ></WindroseChart>

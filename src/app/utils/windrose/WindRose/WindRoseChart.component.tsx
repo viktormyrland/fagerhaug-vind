@@ -13,8 +13,8 @@ import useResponsive from "./hooks/useResponsive";
 
 export function WindroseChart(props: ChartPropTypes) {
   const {
-    width: propWidth,
-    height: propHeight,
+    width: propWidth = 500,
+    height: propHeight = 500,
     chartData: data,
     columns,
     responsive,

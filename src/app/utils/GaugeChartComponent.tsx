@@ -8,8 +8,8 @@ export default function GaugeChartComponent({
   windData: WindData | null;
 }) {
   const options: ChartWrapperOptions["options"] = {
-    width: 250,
-    height: 250,
+    width: 350,
+    height: 350,
     redFrom: 18,
     redTo: 25,
     yellowFrom: 14,
@@ -28,8 +28,8 @@ export default function GaugeChartComponent({
   return (
     <Chart
       chartType="Gauge"
-      width="250px"
-      height="250px"
+      width="350px"
+      height="350px"
       data={data}
       options={options}
     />

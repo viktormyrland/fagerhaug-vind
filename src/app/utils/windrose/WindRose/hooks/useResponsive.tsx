@@ -16,6 +16,7 @@ export default function useResponsive(
     if (current) {
       observer.current.observe(current);
       return () => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.current.unobserve(current);
       };
     }
