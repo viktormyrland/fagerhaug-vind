@@ -20,6 +20,8 @@ export default function HomePage() {
     null,
   );
 
+  const [runwayVisible, setRunwayVisible] = useState(false);
+
   const refreshWindData = useCallback(
     (overrideTimespan = timeSpan) => {
       getWindData(parseInt(overrideTimespan))
@@ -126,12 +128,43 @@ export default function HomePage() {
               {windData && degreesToCardinal(windData.maxGust.direction)}){" "}
             </span>
           </div>
-          <div className="flex w-full max-w-[400px] items-center overflow-hidden rounded-lg border border-slate-600 bg-white">
+          <div
+            className="flex w-full max-w-[400px] cursor-pointer items-center overflow-hidden rounded-lg border border-slate-600 bg-white"
+            onClick={() => setRunwayVisible(!runwayVisible)}
+          >
             {windRoseChartData && (
               <div className="relative max-w-full">
                 <h1 className="absolute top-5 w-full text-center text-xl font-bold text-black">
                   Vindrose siste {timeSpan} minutter
                 </h1>
+                {runwayVisible && (
+                  <div
+                    className="absolute left-1/2 top-1/2 z-30 flex h-[70%] w-8 flex-col items-center justify-between bg-black opacity-20"
+                    style={{
+                      transform: "translate(-50%, -50%) rotate(70deg) ",
+                      transformOrigin: "center",
+                    }}
+                  >
+                    <div className="mt-3 flex w-[80%] flex-row justify-between">
+                      <div className="h-10 w-1 bg-white" />
+                      <div className="mr-1 h-10 w-1 bg-white" />
+                      <div className="h-10 w-1 bg-white" />
+                      <div className="h-10 w-1 bg-white" />
+                    </div>
+
+                    <div className="flex w-[70%] flex-row justify-between">
+                      <div className="h-10 w-1 bg-white" />
+                      <div className="h-10 w-1 bg-white" />
+                    </div>
+
+                    <div className="mb-3 flex w-[80%] flex-row justify-between">
+                      <div className="h-10 w-1 bg-white" />
+                      <div className="mr-1 h-10 w-1 bg-white" />
+                      <div className="h-10 w-1 bg-white" />
+                      <div className="h-10 w-1 bg-white" />
+                    </div>
+                  </div>
+                )}
                 <WindroseChart
                   chartData={windRoseChartData}
                   columns={WINDROSE_COLS}
