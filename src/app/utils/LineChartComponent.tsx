@@ -1,11 +1,11 @@
 import React from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
-import { type WindEntryInformation } from "./types";
+import { type WindData } from "./types";
 
 export default function LineChartComponent({
   windData,
 }: {
-  windData: WindEntryInformation[] | null;
+  windData: WindData | null;
 }) {
   const options: ChartWrapperOptions["options"] = {
     title: "",
@@ -28,7 +28,7 @@ export default function LineChartComponent({
           windData !== null
             ? Math.max(
                 15,
-                windData.reduce((max, current) => {
+                windData.wind_histogram.reduce((max, current) => {
                   return Number(current.max_gust.value) > max
                     ? Number(current.max_gust.value)
                     : max;
@@ -58,7 +58,7 @@ export default function LineChartComponent({
       { id: "i1", type: "number", role: "interval" },
       { type: "string", role: "tooltip", p: { html: true } }, // Tooltip column
     ],
-    ...windData.map((wei) => {
+    ...windData.wind_histogram.map((wei) => {
       return [
         new Date(wei.timestamp),
         /* wei.avg_wind, */

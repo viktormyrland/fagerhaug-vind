@@ -16,9 +16,6 @@ export default function HomePage() {
     ChartData[] | undefined
   >(undefined);
   const [timeSpan, setTimeSpan] = useState<TimeSpan>("10");
-  const [secondsSinceUpdate, setSecondsSinceUpdate] = useState<number | null>(
-    null,
-  );
 
   const [runwayVisible, setRunwayVisible] = useState(false);
 
@@ -46,33 +43,7 @@ export default function HomePage() {
 
   useEffect(() => {
     refreshWindData();
-  }, []);
-
-  useEffect(() => {
-    // Function to update the elapsed time
-    const updateSeconds = () => {
-      if (!windData) return;
-      const now = new Date();
-      const previous = new Date(windData.timestamp);
-      const milliseconds = now.getTime() - previous.getTime();
-      const newSeconds = Math.floor(milliseconds / 1000);
-      setSecondsSinceUpdate(newSeconds);
-
-      if (newSeconds >= 10) {
-        refreshWindData();
-        return;
-      }
-    };
-
-    // Call the function once on mount to initialize the seconds state
-    updateSeconds();
-
-    // Set up an interval to update the seconds every second
-    const intervalId = setInterval(updateSeconds, 1000);
-
-    // Cleanup function to clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, [windData, refreshWindData]); // Depend on `previousDate` to reset the interval if it changes
+  }, [refreshWindData]);
 
   function degreesToCardinal(d: number) {
     const directions = ["N", "NØ", "Ø", "SØ", "S", "SV", "V", "NV"];
@@ -101,19 +72,17 @@ export default function HomePage() {
               placeholder="Select a timespan"
             />
           </div>
-          <div className="mr-3 flex w-[12rem] items-center">
-            Oppdateres om
-            <span className="ml-1">
-              {secondsSinceUpdate ? Math.max(10 - secondsSinceUpdate, 0) : 10}s
-            </span>
-          </div>
+          <SecondsSinceUpdateComponent
+            refreshWindData={refreshWindData}
+            windData={windData}
+          />
         </div>
         <div className="flex w-full flex-row flex-wrap items-stretch justify-center gap-3">
           <div className="relative flex w-[400px] flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
             <h1 className="z-20 mt-4 w-full text-center text-lg font-bold text-black">
               Maks vindkast siste {timeSpan} minutter
             </h1>
-            <GaugeChartComponent windData={windData ?? null} />
+            <GaugeChartComponent windData={windData} />
 
             <strong>Tidspunkt:</strong>
             <span>
@@ -181,10 +150,59 @@ export default function HomePage() {
           <h1 className="absolute top-5 z-20 w-full text-center text-xl font-bold text-black">
             Vindgraf siste {timeSpan} minutter
           </h1>
-          <LineChartComponent windData={windData?.wind_histogram ?? null} />
+          <LineChartComponent windData={windData} />
         </div>
         <span>Laget med ❤ av Viktor</span>
       </div>
     </main>
   );
 }
+
+const SecondsSinceUpdateComponent = ({
+  windData,
+  refreshWindData,
+}: {
+  windData: WindData | null;
+  refreshWindData: () => void;
+}) => {
+  const [secondsSinceUpdate, setSecondsSinceUpdate] = useState<number | null>(
+    null,
+  );
+
+  useEffect(() => {
+    // Function to update the elapsed time
+    const updateSeconds = () => {
+      if (!windData) return;
+      const now = new Date();
+      const previous = new Date(windData.timestamp);
+      const milliseconds = now.getTime() - previous.getTime();
+      const newSeconds = Math.floor(milliseconds / 1000);
+      setSecondsSinceUpdate(newSeconds);
+
+      if (newSeconds >= 10) {
+        refreshWindData();
+        return;
+      }
+    };
+
+    // Call the function once on mount to initialize the seconds state
+    updateSeconds();
+
+    // Set up an interval to update the seconds every second
+    const intervalId = setInterval(updateSeconds, 1000);
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [refreshWindData, windData]); // Depend on `previousDate` to reset the interval if it changes
+
+  return (
+    <div className="mr-3 flex w-[12rem] items-center">
+      Oppdateres om
+      {windData && (
+        <span className="ml-1">
+          {secondsSinceUpdate ? Math.max(10 - secondsSinceUpdate, 0) : 10}s
+        </span>
+      )}
+    </div>
+  );
+};
