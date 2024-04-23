@@ -23,16 +23,17 @@ export default function LineChartComponent({
       minValue: 0,
       viewWindow: {
         min: 0,
-        max: windData
-          ? Math.max(
-              15,
-              windData.reduce((max, current) => {
-                return current.max_gust.value > max
-                  ? current.max_gust.value
-                  : max;
-              }, 0),
-            )
-          : 15,
+        max:
+          windData !== null
+            ? Math.max(
+                15,
+                windData.reduce((max, current) => {
+                  return current.max_gust.value > max
+                    ? current.max_gust.value
+                    : max;
+                }, 0),
+              )
+            : 15,
       },
     },
     tooltip: {
