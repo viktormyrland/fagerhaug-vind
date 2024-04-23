@@ -78,7 +78,7 @@ export default function HomePage() {
           />
         </div>
         <div className="flex w-full flex-row flex-wrap items-stretch justify-center gap-3">
-          <div className="relative flex w-[400px] flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
+          <div className="relative flex w-[400px] select-none flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
             <h1 className="z-20 mt-4 w-full text-center text-lg font-bold text-black">
               Maks vindkast siste {timeSpan} minutter
             </h1>
@@ -146,7 +146,7 @@ export default function HomePage() {
             )}
           </div>
         </div>
-        <div className="relative flex w-full overflow-hidden rounded-lg border border-slate-600">
+        <div className="relative flex w-full select-none overflow-hidden rounded-lg border border-slate-600">
           <h1 className="absolute top-5 z-20 w-full text-center text-xl font-bold text-black">
             Vindgraf siste {timeSpan} minutter
           </h1>
