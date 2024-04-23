@@ -152,7 +152,17 @@ export default function HomePage() {
           </h1>
           <LineChartComponent windData={windData} />
         </div>
-        <span>Laget med ❤ av Viktor</span>
+        <span>
+          Laget med ❤ av{" "}
+          <a
+            className="font-bold text-sky-400"
+            href="https://github.com/viktormyrland"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Viktor
+          </a>
+        </span>
       </div>
     </main>
   );
