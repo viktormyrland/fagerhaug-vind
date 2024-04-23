@@ -65,7 +65,7 @@ export default function LineChartComponent({
         wei.max_gust.value,
         wei.avg_wind,
         wei.max_gust.value,
-        `<div style="width:150px;padding:5px;color:black;"><strong>Tid:</strong> ${new Date(wei.timestamp).toLocaleTimeString()}<br/><strong>Snittvind:</strong> ${Number(wei.avg_wind).toFixed(1)} kn<br/><strong>Vindkast:</strong> ${wei.max_gust.value} kn</div>`,
+        `<div style="width:180px;padding:5px;color:black;"><strong>Tid:</strong> ${new Date(wei.timestamp).toLocaleTimeString()}<br/><strong>Snittvind:</strong> ${Number(wei.avg_wind).toFixed(1)} kn<br/><strong>Vindkast:</strong> ${wei.max_gust.value} kn</div>`,
       ];
     }),
   ];

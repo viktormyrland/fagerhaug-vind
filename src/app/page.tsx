@@ -58,11 +58,11 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex  flex-col items-center justify-start gap-12 px-3 py-16 ">
+      <div className="container flex flex-col items-center justify-start gap-12 px-3 py-16 ">
         <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-[3rem]">
           Fagerhaug <span className="text-[hsl(280,100%,70%)]">Vind</span>
         </h1>
-        <div className="mx-4 flex flex-row gap-3 rounded-lg bg-white py-2 text-black">
+        <div className="mx-4 flex flex-row flex-wrap justify-center gap-3 rounded-lg bg-white py-2 text-black">
           <div className="flex items-center gap-3 rounded pl-3 ">
             Antall minutter:
             <Dropdown
@@ -196,7 +196,7 @@ const SecondsSinceUpdateComponent = ({
   }, [refreshWindData, windData]); // Depend on `previousDate` to reset the interval if it changes
 
   return (
-    <div className="mr-3 flex w-[12rem] items-center">
+    <div className="mr-3 flex w-[12rem] items-center justify-center">
       Oppdateres om
       {windData && (
         <span className="ml-1">
