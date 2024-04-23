@@ -13,6 +13,7 @@ export default function LineChartComponent({
     series: [{ color: "#ff0000" }],
     intervals: { style: "area" },
     legend: "none",
+    focusTarget: "category",
     hAxis: {
       slantedText: true,
       slantedTextAngle: 45,
