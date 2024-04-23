@@ -129,7 +129,7 @@ export default function HomePage() {
             </span>
           </div>
           <div
-            className="flex w-full max-w-[400px] cursor-pointer items-center overflow-hidden rounded-lg border border-slate-600 bg-white"
+            className="flex w-full max-w-[400px] cursor-pointer select-none items-center overflow-hidden rounded-lg border border-slate-600 bg-white"
             onClick={() => setRunwayVisible(!runwayVisible)}
           >
             {windRoseChartData && (
