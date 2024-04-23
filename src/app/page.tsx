@@ -4,10 +4,10 @@ import { getWindData } from "./utils/PageActions";
 import { type TimeSpan, type WindData } from "./utils/types";
 import { type ChartData, calculateWindRose } from "./utils/WindRoseUtils";
 import Dropdown, { type Option } from "react-dropdown";
-import { WindroseChart } from "./utils/windrose";
 import "react-dropdown/style.css";
 import LineChartComponent from "./utils/LineChartComponent";
 import GaugeChartComponent from "./utils/GaugeChartComponent";
+import { WindroseChart } from "./utils/windrose/WindRoseChart.component";
 
 const WINDROSE_COLS = ["angle", "0-7", "7-14", "14-18", "18+"];
 export default function HomePage() {
@@ -141,7 +141,7 @@ export default function HomePage() {
                   width={400}
                   height={400}
                   responsive={true}
-                ></WindroseChart>
+                />
               </div>
             )}
           </div>

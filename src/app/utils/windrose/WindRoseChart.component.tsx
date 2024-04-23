@@ -8,7 +8,7 @@
 // @ts-nocheck
 import React from "react";
 import * as d3 from "d3";
-import { type ChartPropTypes, type DataType } from "../Types";
+import { type ChartPropTypes, type DataType } from "./Types";
 import useResponsive from "./hooks/useResponsive";
 
 export function WindroseChart(props: ChartPropTypes) {
