@@ -28,10 +28,10 @@ export default function LineChartComponent({
             ? Math.max(
                 15,
                 windData.reduce((max, current) => {
-                  return current.max_gust.value > max
-                    ? current.max_gust.value
+                  return Number(current.max_gust.value) > max
+                    ? Number(current.max_gust.value)
                     : max;
-                }, 0),
+                }, 15) + 1,
               )
             : 15,
       },
