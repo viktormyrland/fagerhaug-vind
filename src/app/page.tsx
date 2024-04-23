@@ -44,7 +44,7 @@ export default function HomePage() {
 
   useEffect(() => {
     refreshWindData();
-  }, [refreshWindData]);
+  }, []);
 
   useEffect(() => {
     // Function to update the elapsed time
