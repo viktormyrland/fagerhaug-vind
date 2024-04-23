@@ -17,8 +17,8 @@ const headers = {
   "Content-Type": "application/json",
   Authorization: "ApiKey " + API_KEY,
 };
-export const getWindData = async (minutes: number) => {
-  const endDate = new Date();
+export const getWindData = async (targetMs: number, minutes: number) => {
+  const endDate = new Date(targetMs);
   const startDate = new Date(endDate.getTime() - minutes * 60 * 1000);
   const data = {
     aggs: {
