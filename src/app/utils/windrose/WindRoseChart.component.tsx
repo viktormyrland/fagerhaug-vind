@@ -8,7 +8,7 @@
 // @ts-nocheck
 import React from "react";
 import * as d3 from "d3";
-import { type ChartPropTypes, type DataType } from "./Types";
+import { type ChartPropTypes, type DataType } from "./WindRoseChart.types";
 import useResponsive from "./hooks/useResponsive";
 
 export function WindroseChart(props: ChartPropTypes) {
@@ -87,7 +87,7 @@ export function WindroseChart(props: ChartPropTypes) {
         "#f4e242",
         "#f4a142",
         "#f44242",
-      ]); */ .range(["#42c5f4", "#adf442", "#f4e242", "#f44242"]);
+      ]); */ .range(["#92ddf7", "#42c5f4", "#adf442", "#f4e242", "#f44242"]);
     x.domain(data.map((d) => String(d.angle)));
     // xGroup.domain(columns.map((d) => d));
     y.domain([
@@ -216,8 +216,8 @@ export function WindroseChart(props: ChartPropTypes) {
       .attr(
         "transform",
         (d, i) =>
-          `translate(${0 + -20 + legendGap / 2},${
-            outerRadius + 100 + (i - (columns.length - 1) / 2) * 20
+          `translate(${outerRadius / 3 /*+  legendGap / 2 */},${
+            outerRadius + 70 + (i - (columns.length - 1) / 2) * 20
           })`,
       );
     legend

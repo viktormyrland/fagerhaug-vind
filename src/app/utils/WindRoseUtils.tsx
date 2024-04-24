@@ -1,10 +1,12 @@
-import { type Count, Direction } from "./windrose/Types";
+import { type Count, Direction } from "./windrose/WindRoseChart.types";
 
 const countPush = (count: Count, dir: Direction, speed: number) => {
-  if (speed < 7) {
-    count[dir]["0-7"]++;
+  if (speed < 5) {
+    count[dir]["0-5"]++;
+  } else if (speed < 10) {
+    count[dir]["5-10"]++;
   } else if (speed < 14) {
-    count[dir]["7-14"]++;
+    count[dir]["10-14"]++;
   } else if (speed < 18) {
     count[dir]["14-18"]++;
   } else {
@@ -47,11 +49,10 @@ type Data = {
 export type ChartData = {
   angle: string;
   total: number;
-  [key: string]: number | string; // Allow dynamic properties that are numbers or strings
+  [key: string]: number | string;
 };
 
 export function calculateWindRose(data: Data): ChartData[] {
-  /*  console.log("direction", data.direction); */
   if (data.direction.length !== data.speed.length) {
     throw new Error("Direction and speed arrays must be of the same length.");
   }
@@ -59,7 +60,7 @@ export function calculateWindRose(data: Data): ChartData[] {
   const count: Count = Object.fromEntries(
     Object.values(Direction).map((dir) => [
       dir,
-      { "0-7": 0, "7-14": 0, "14-18": 0, "18+": 0 },
+      { "0-5": 0, "5-10": 0, "10-14": 0, "14-18": 0, "18+": 0 },
     ]),
   ) as Count;
 
@@ -69,32 +70,30 @@ export function calculateWindRose(data: Data): ChartData[] {
     countPush(count, dir, speed!);
   });
 
-  let maxTotal = 0; // This will keep track of the maximum sum of all percentages
+  let maxTotal = 0;
 
   const chartData = Object.entries(count).map(([key, value]) => {
     const percentages = Object.fromEntries(
       Object.entries(value).map(([range, count]) => [
         range,
         count / (data.direction.length || 1),
-      ]), // Prevent division by zero
+      ]),
     );
     const totalPercentage = Object.values(percentages).reduce(
       (sum, percentage) => sum + percentage,
       0,
     );
 
-    maxTotal = Math.max(maxTotal, totalPercentage); // Update maxTotal if this direction's total is higher
+    maxTotal = Math.max(maxTotal, totalPercentage);
 
     return {
       angle: key,
       ...percentages,
-      total: totalPercentage, // This now stores the sum of percentages for each direction
+      total: totalPercentage,
     } as ChartData;
   });
 
-  // Normalize all percentages and total values to scale from 0 to maxTotal
   if (maxTotal > 0) {
-    // Ensure there is a valid maxTotal to avoid division by zero
     chartData.forEach((data) => {
       Object.keys(data).forEach((key) => {
         if (key !== "angle") {

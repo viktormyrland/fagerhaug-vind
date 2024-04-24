@@ -1,6 +1,6 @@
 import React from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
-import { type WindData } from "./types";
+import { type WindData } from "../types";
 
 export default function LineChartComponent({
   windData,

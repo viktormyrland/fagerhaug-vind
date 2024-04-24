@@ -1,11 +1,3 @@
-export type ReturnData = {
-  aggregations: {
-    maxGust: {
-      value: number;
-    };
-  };
-};
-
 export type WindData = {
   timestamp: Date;
   maxGust: {
@@ -26,5 +18,4 @@ export type WindEntryInformation = {
   };
 };
 
-export type Angle = "N" | "NE" | "E" | "SE" | "S" | "SW" | "W" | "NW";
 export type TimeSpan = "60" | "30" | "10";
