@@ -7,6 +7,8 @@ import React, {
 import Dropdown, { type Option } from "react-dropdown";
 import { type TimeSpan, type WindData } from "../types";
 
+const REFRESH_INTERVAL = 30;
+
 interface HeaderProps {
   windData: WindData | null;
   timeSpan: TimeSpan;
@@ -65,7 +67,7 @@ const SecondsSinceUpdateComponent = ({
       const newSeconds = Math.floor(milliseconds / 1000);
       setSecondsSinceUpdate(newSeconds);
 
-      if (newSeconds >= 10) {
+      if (newSeconds >= REFRESH_INTERVAL) {
         refreshWindData();
         return;
       }
@@ -86,7 +88,10 @@ const SecondsSinceUpdateComponent = ({
       Oppdateres om
       {windData && (
         <span className="ml-1">
-          {secondsSinceUpdate ? Math.max(10 - secondsSinceUpdate, 0) : 10}s
+          {secondsSinceUpdate
+            ? Math.max(REFRESH_INTERVAL - secondsSinceUpdate, 0)
+            : REFRESH_INTERVAL}
+          s
         </span>
       )}
     </div>
