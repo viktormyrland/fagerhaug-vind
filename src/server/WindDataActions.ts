@@ -3,7 +3,6 @@ import { type WindData } from "../app/utils/types";
 
 const API_KEY: string = process.env.API_KEY!;
 const API_URL: string = process.env.API_URL!;
-const DATA_INTERVAL = "10s";
 
 const HTTP_HEADERS = {
   Accept: "*/*",
@@ -21,6 +20,9 @@ const HTTP_HEADERS = {
 export const getWindData = async (minutes: number) => {
   const endDate = new Date();
   const startDate = new Date(endDate.getTime() - minutes * 60 * 1000);
+
+  // Make the data interval 1/30 of the length to always have 30 data points
+  const data_interval = minutes * 2 + "s";
 
   const elasticsearch_query = {
     aggs: {
@@ -50,7 +52,7 @@ export const getWindData = async (minutes: number) => {
       time_buckets: {
         date_histogram: {
           field: "@timestamp",
-          interval: DATA_INTERVAL,
+          interval: data_interval,
           extended_bounds: {
             min: startDate.getTime(),
             max: endDate.getTime(),
