@@ -1,6 +1,6 @@
 import React from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
-import { type TimeSpan, type WindData } from "../types";
+import { type TimeSpan, type WindData } from "../utils/types";
 
 interface GaugeChartProps {
   windData: WindData | null;

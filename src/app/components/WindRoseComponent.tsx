@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { calculateWindRose, type ChartData } from "../WindRoseUtils";
-import { type TimeSpan, type WindData } from "../types";
-import { WindroseChart } from "../windrose/WindRoseChart.component";
+import { calculateWindRose, type ChartData } from "../utils/WindRoseUtils";
+import { type TimeSpan, type WindData } from "../utils/types";
+import { WindroseChart } from "../utils/windrose/WindRoseChart.component";
 
 const WINDROSE_COLS = ["angle", "0-5", "5-10", "10-14", "14-18", "18+"];
 

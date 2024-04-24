@@ -5,7 +5,7 @@ import React, {
   useState,
 } from "react";
 import Dropdown, { type Option } from "react-dropdown";
-import { type TimeSpan, type WindData } from "../types";
+import { type TimeSpan, type WindData } from "../utils/types";
 
 const REFRESH_INTERVAL = 30;
 

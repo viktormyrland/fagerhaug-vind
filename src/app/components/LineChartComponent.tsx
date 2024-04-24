@@ -1,6 +1,6 @@
 import React from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
-import { type WindData } from "../types";
+import { type WindData } from "../utils/types";
 
 const ANNOTATION_THRESHOLD = 11;
 

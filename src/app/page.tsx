@@ -3,10 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 import { getWindData } from "../server/WindDataActions";
 import { type TimeSpan, type WindData } from "./utils/types";
 import "react-dropdown/style.css";
-import LineChartComponent from "./utils/components/LineChartComponent";
-import GaugeChartComponent from "./utils/components/GaugeChartComponent";
-import WindRoseComponent from "./utils/components/WindRoseComponent";
-import HeaderComponent from "./utils/components/HeaderComponent";
+import LineChartComponent from "./components/LineChartComponent";
+import GaugeChartComponent from "./components/GaugeChartComponent";
+import WindRoseComponent from "./components/WindRoseComponent";
+import HeaderComponent from "./components/HeaderComponent";
 
 export default function HomePage() {
   const [windData, setWindData] = useState<WindData | null>(null);
