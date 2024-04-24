@@ -15,7 +15,7 @@ export default function LineChartComponent({
   const data = [
     [
       { type: "date", label: "Tid" },
-      { type: "number", label: "Vindkast" },
+      { type: "number", label: "Vind" },
       { id: "i0", type: "number", role: "interval" },
       { id: "i1", type: "number", role: "interval" },
       { type: "number", label: "Grense", role: "annotation" },
@@ -59,7 +59,7 @@ export default function LineChartComponent({
         wei.max_gust.value,
         annotation,
         /* `${wei.max_gust.value} kn.`, */
-        `<div style="width:180px;padding:5px;color:black;"><strong>Tid:</strong> ${new Date(wei.timestamp).toLocaleTimeString()}<br/><strong>Snittvind:</strong> ${Number(wei.avg_wind).toFixed(1)} kn<br/><strong>Vindkast:</strong> ${wei.max_gust.value} kn</div>`,
+        `<div style="width:180px;padding:5px;color:black;"><strong>Tid:</strong> ${new Date(wei.timestamp).toLocaleTimeString()}<br/><strong>Vindkast:</strong> ${wei.max_gust.value} kn<br/><strong>Snittvind:</strong> ${Number(wei.avg_wind).toFixed(1)} kn</div>`,
       ];
     }),
   ];
