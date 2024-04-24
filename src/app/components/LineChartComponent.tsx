@@ -35,7 +35,7 @@ export default function LineChartComponent({
        *      AND
        *    the value is above ANNOTATION_THRESHOLD
        *      AND
-       *    the value is above 90% of the max gust
+       *    the value is above 80% of the max gust
        */
       if (
         (wei.max_gust.value === windData.maxGust.value &&
