@@ -3,6 +3,7 @@ import Chart, { type ChartWrapperOptions } from "react-google-charts";
 import { type WindData } from "../utils/types";
 
 const ANNOTATION_THRESHOLD = 11;
+const ANNOTATION_MIN_MAXGUST_THRESHOLD = 3;
 
 export default function LineChartComponent({
   windData,
@@ -27,15 +28,18 @@ export default function LineChartComponent({
        * Data points will have an annotation if;
        *
        *    the value equals the max gust
+       *      AND
+       *    the value is above ANNOTATION_MIN_MAXGUST_THRESHOLD
        * OR
-       *    the value is above 90% of the max gust
+       *    the value is a peak (higher than the value before and after)
        *      AND
        *    the value is above ANNOTATION_THRESHOLD
        *      AND
-       *    the value is a peak (higher than the value before and after)
+       *    the value is above 90% of the max gust
        */
       if (
-        wei.max_gust.value === windData.maxGust.value ||
+        (wei.max_gust.value === windData.maxGust.value &&
+          wei.max_gust.value > ANNOTATION_MIN_MAXGUST_THRESHOLD) ||
         (wei.max_gust.value >= ANNOTATION_THRESHOLD &&
           wei.max_gust.value >= windData.maxGust.value * 0.8 &&
           (index === 0 ||
