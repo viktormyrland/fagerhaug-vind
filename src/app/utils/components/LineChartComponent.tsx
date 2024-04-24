@@ -73,7 +73,7 @@ export default function LineChartComponent({
             return Number(current.max_gust.value) > max
               ? Number(current.max_gust.value)
               : max;
-          }, 15) + 1,
+          }, 15) + 4,
         ),
       },
     },
