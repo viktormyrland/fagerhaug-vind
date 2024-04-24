@@ -2,8 +2,6 @@ import React from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
 import { type WindData } from "../types";
 
-// Data points above this threshold will have an annotation if the
-// value is higher than the value before and after
 const ANNOTATION_THRESHOLD = 11;
 
 export default function LineChartComponent({
@@ -24,14 +22,28 @@ export default function LineChartComponent({
     ],
     ...windData.wind_histogram.map((wei, index) => {
       let annotation = null;
+
+      /**
+       * Data points will have an annotation if;
+       *
+       *    the value equals the max gust
+       * OR
+       *    the value is above 90% of the max gust
+       *      AND
+       *    the value is above ANNOTATION_THRESHOLD
+       *      AND
+       *    the value is a peak (higher than the value before and after)
+       */
       if (
-        wei.max_gust.value >= ANNOTATION_THRESHOLD &&
-        (index === 0 ||
-          wei.max_gust.value >
-            windData.wind_histogram[index - 1]!.max_gust.value) &&
-        (index === windData.wind_histogram.length - 1 ||
-          wei.max_gust.value >
-            windData.wind_histogram[index + 1]!.max_gust.value)
+        wei.max_gust.value === windData.maxGust.value ||
+        (wei.max_gust.value >= ANNOTATION_THRESHOLD &&
+          wei.max_gust.value >= windData.maxGust.value * 0.8 &&
+          (index === 0 ||
+            wei.max_gust.value >
+              windData.wind_histogram[index - 1]!.max_gust.value) &&
+          (index === windData.wind_histogram.length - 1 ||
+            wei.max_gust.value >
+              windData.wind_histogram[index + 1]!.max_gust.value))
       ) {
         annotation = wei.max_gust.value;
       }
