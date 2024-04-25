@@ -43,7 +43,7 @@ export default function LineChartComponent({
         (wei.max_gust.value >= ANNOTATION_THRESHOLD &&
           wei.max_gust.value >= windData.maxGust.value * 0.8 &&
           (index === 0 ||
-            wei.max_gust.value >
+            wei.max_gust.value >=
               windData.wind_histogram[index - 1]!.max_gust.value) &&
           (index === windData.wind_histogram.length - 1 ||
             wei.max_gust.value >
