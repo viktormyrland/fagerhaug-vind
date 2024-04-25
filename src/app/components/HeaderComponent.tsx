@@ -5,20 +5,20 @@ import React, {
   useState,
 } from "react";
 import Dropdown, { type Option } from "react-dropdown";
-import { type TimeSpan, type WindData } from "../utils/types";
+import { type TimeSpan } from "../utils/types";
 
 const REFRESH_INTERVAL = 30;
 
 interface HeaderProps {
-  windData: WindData | null;
+  previousAttempt: Date | null;
   timeSpan: TimeSpan;
   setTimeSpan: Dispatch<SetStateAction<TimeSpan>>;
   refreshWindData: (overrideTimespan?: TimeSpan) => void;
 }
 
 export default function HeaderComponent({
-  windData,
   timeSpan,
+  previousAttempt,
   setTimeSpan,
   refreshWindData,
 }: HeaderProps) {
@@ -40,17 +40,17 @@ export default function HeaderComponent({
       </div>
       <SecondsSinceUpdateComponent
         refreshWindData={refreshWindData}
-        windData={windData}
+        previousAttempt={previousAttempt}
       />
     </div>
   );
 }
 
 const SecondsSinceUpdateComponent = ({
-  windData,
+  previousAttempt,
   refreshWindData,
 }: {
-  windData: WindData | null;
+  previousAttempt: Date | null;
   refreshWindData: () => void;
 }) => {
   const [secondsSinceUpdate, setSecondsSinceUpdate] = useState<number | null>(
@@ -60,9 +60,9 @@ const SecondsSinceUpdateComponent = ({
   useEffect(() => {
     // Function to update the elapsed time
     const updateSeconds = () => {
-      if (!windData) return;
+      if (!previousAttempt) return;
       const now = new Date();
-      const previous = new Date(windData.timestamp);
+      const previous = previousAttempt;
       const milliseconds = now.getTime() - previous.getTime();
       const newSeconds = Math.floor(milliseconds / 1000);
       setSecondsSinceUpdate(newSeconds);
@@ -81,12 +81,12 @@ const SecondsSinceUpdateComponent = ({
 
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [refreshWindData, windData]); // Depend on `previousDate` to reset the interval if it changes
+  }, [previousAttempt, refreshWindData]); // Depend on `previousDate` to reset the interval if it changes
 
   return (
     <div className="mr-3 flex w-[12rem] items-center justify-center">
       Oppdateres om
-      {windData && (
+      {previousAttempt && (
         <span className="ml-1">
           {secondsSinceUpdate
             ? Math.max(REFRESH_INTERVAL - secondsSinceUpdate, 0)

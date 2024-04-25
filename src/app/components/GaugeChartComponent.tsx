@@ -13,7 +13,7 @@ export default function GaugeChartComponent({
 }: GaugeChartProps) {
   return (
     <div className="relative flex w-[400px] select-none flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
-      <h1 className="z-20 mt-4 w-full text-center text-lg font-bold text-black">
+      <h1 className=" mt-4 w-full text-center text-lg font-bold text-black">
         Maks vindkast siste {timeSpan} minutter
       </h1>
       <GaugeChart windData={windData} />
