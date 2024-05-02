@@ -7,11 +7,16 @@ import LineChartComponent from "./components/LineChartComponent";
 import GaugeChartComponent from "./components/GaugeChartComponent";
 import WindRoseComponent from "./components/WindRoseComponent";
 import HeaderComponent from "./components/HeaderComponent";
+import { useSearchParams } from "next/navigation";
 
 export default function HomePage() {
+  const searchParams = useSearchParams();
+  const fullscreen = searchParams.get("fullscreen");
+  const defaultTimeSpan = searchParams.get("timespan") as TimeSpan;
+
   const [windData, setWindData] = useState<WindData | null>(null);
 
-  const [timeSpan, setTimeSpan] = useState<TimeSpan>("10");
+  const [timeSpan, setTimeSpan] = useState<TimeSpan>(defaultTimeSpan ?? "10");
   const [errorVisible, setErrorVisible] = useState(false);
   const [previousAttempt, setPreviousAttempt] = useState<Date | null>(null);
 
@@ -36,6 +41,16 @@ export default function HomePage() {
   useEffect(() => {
     refreshWindData();
   }, [refreshWindData]);
+
+  if (fullscreen === "windrose") {
+    return (
+      <WindRoseComponent windData={windData} timeSpan={timeSpan} fullscreen />
+    );
+  } else if (fullscreen === "max") {
+    return (
+      <GaugeChartComponent windData={windData} timeSpan={timeSpan} fullscreen />
+    );
+  }
 
   return (
     <main className=" flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">

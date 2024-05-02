@@ -6,6 +6,11 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 
 This site displays real-time wind information received from Oppdal Airport, Fagerhaug (ENOP). It connects to an Elasticsearch database using the environment variables provided.
 
+### GET Parameters
+
+- `fullscreen`: (optional) Specify which graph to view in fullscreen. Accepted values: [`max`, `windrose`]
+- `timespan`: (optional) Specify the default time span selected. Any integer is accepted
+
 ### Environment Variables
 
 - `API_KEY` - api key to elasticsearch

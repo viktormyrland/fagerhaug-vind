@@ -1,22 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
 import { type TimeSpan, type WindData } from "../utils/types";
 
 interface GaugeChartProps {
   windData: WindData | null;
   timeSpan: TimeSpan;
+  fullscreen?: boolean;
 }
 
 export default function GaugeChartComponent({
   windData,
   timeSpan,
+  fullscreen,
 }: GaugeChartProps) {
+  const [fullscreenMaxDimensions, setFullscreenMaxDimensions] = useState([
+    350, 350,
+  ]);
+
+  useEffect(() => {
+    setFullscreenMaxDimensions([
+      Math.min(window.innerWidth * 1.4, window.innerHeight),
+      Math.min(window.innerHeight / 1.4, window.innerWidth),
+    ]);
+  }, []);
   return (
-    <div className="relative flex w-[400px] select-none flex-col items-center overflow-hidden rounded-lg border border-slate-600 bg-white text-black">
+    <div
+      className={`relative flex ${fullscreen ? "h-screen" : "w-[400px] border border-slate-600"} select-none flex-col items-center overflow-hidden rounded-lg  bg-white text-black`}
+    >
       <h1 className=" mt-4 w-full text-center text-lg font-bold text-black">
         Maks vindkast siste {timeSpan} minutter
       </h1>
-      <GaugeChart windData={windData} />
+      <GaugeChart
+        windData={windData}
+        fullscreen={fullscreen}
+        fullscreenMaxDimensions={fullscreenMaxDimensions}
+      />
 
       <strong>Tidspunkt:</strong>
       <span>
@@ -32,10 +50,18 @@ export default function GaugeChartComponent({
     </div>
   );
 }
-function GaugeChart({ windData }: { windData: WindData | null }) {
+function GaugeChart({
+  windData,
+  fullscreen,
+  fullscreenMaxDimensions,
+}: {
+  windData: WindData | null;
+  fullscreen?: boolean;
+  fullscreenMaxDimensions: number[];
+}) {
   const options: ChartWrapperOptions["options"] = {
-    width: 350,
-    height: 350,
+    width: fullscreen ? fullscreenMaxDimensions[1] : 350,
+    height: fullscreen ? fullscreenMaxDimensions[0] : 350,
     redFrom: 18,
     redTo: 25,
     yellowFrom: 14,
@@ -54,8 +80,8 @@ function GaugeChart({ windData }: { windData: WindData | null }) {
   return (
     <Chart
       chartType="Gauge"
-      width="350px"
-      height="350px"
+      width={`${fullscreen ? fullscreenMaxDimensions[1] : 350}px`}
+      height={`${fullscreen ? fullscreenMaxDimensions[0] : 350}px`}
       data={data}
       options={options}
     />

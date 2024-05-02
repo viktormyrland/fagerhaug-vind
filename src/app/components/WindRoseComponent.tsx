@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { calculateWindRose, type ChartData } from "../utils/WindRoseUtils";
 import { type TimeSpan, type WindData } from "../utils/types";
 import { WindroseChart } from "../utils/windrose/WindRoseChart.component";
@@ -8,11 +8,13 @@ const WINDROSE_COLS = ["angle", "0-5", "5-10", "10-14", "14-18", "18+"];
 interface WindRoseProps {
   windData: WindData | null;
   timeSpan: TimeSpan;
+  fullscreen?: boolean;
 }
 
 export default function WindRoseComponent({
   windData,
   timeSpan,
+  fullscreen,
 }: WindRoseProps) {
   const [runwayVisible, setRunwayVisible] = useState(false);
   /* const [windRoseChartData, setWindRoseChartData] = useState<
@@ -21,6 +23,17 @@ export default function WindRoseComponent({
 
   const direction: number[] = [];
   const speed: number[] = [];
+
+  const [fullscreenMaxDimensions, setFullscreenMaxDimensions] = useState([
+    350, 350,
+  ]);
+
+  useEffect(() => {
+    setFullscreenMaxDimensions([
+      Math.min(window.innerWidth * 1.4, window.innerHeight),
+      Math.min(window.innerHeight / 1.4, window.innerWidth),
+    ]);
+  }, []);
 
   if (windData)
     windData.wind_histogram.forEach((wmi) => {
@@ -37,7 +50,7 @@ export default function WindRoseComponent({
 
   return (
     <div
-      className="flex w-full max-w-[400px] cursor-pointer select-none items-center overflow-hidden rounded-lg border border-slate-600 bg-white"
+      className={`flex w-full ${fullscreen ? "max-w-screen justify-center" : "max-w-[400px] border border-slate-600"} cursor-pointer select-none items-center overflow-hidden rounded-lg  bg-white`}
       onClick={() => setRunwayVisible(!runwayVisible)}
     >
       <div className="relative max-w-full">
@@ -77,8 +90,8 @@ export default function WindRoseComponent({
             chartData={windRoseChartData}
             columns={WINDROSE_COLS}
             legendGap={0}
-            width={400}
-            height={400}
+            width={fullscreen ? fullscreenMaxDimensions[1]! : 400}
+            height={fullscreen ? fullscreenMaxDimensions[0]! : 400}
             responsive={true}
           />
         ) : (
