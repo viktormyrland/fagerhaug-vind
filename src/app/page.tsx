@@ -73,16 +73,12 @@ export default function HomePage() {
             <GaugeChartComponent windData={windData} timeSpan={timeSpan} />
             <WindRoseComponent windData={windData} timeSpan={timeSpan} />
           </div>
-          <div className="relative flex w-full select-none overflow-hidden rounded-lg border border-slate-600">
-            <h1 className="absolute top-5 z-20 w-full text-center text-xl font-bold text-black">
-              Vindgraf siste {timeSpan} minutter
-            </h1>
-            <LineChartComponent windData={windData} />
-          </div>
-          <span>
-            Laget med ❤ av{" "}
+          <LineChartComponent windData={windData} timeSpan={timeSpan} />
+          <span className="">
+            Laget med{" "}
+            <span className="heart cursor-default text-red-500">❤</span> av{" "}
             <a
-              className="font-bold text-sky-400"
+              className="hover-animate font-bold text-sky-400 hover:text-sky-300"
               href="https://github.com/viktormyrland"
               target="_blank"
               rel="noopener noreferrer"

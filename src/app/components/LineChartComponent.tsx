@@ -7,8 +7,10 @@ const ANNOTATION_MIN_MAXGUST_THRESHOLD = 3;
 
 export default function LineChartComponent({
   windData,
+  timeSpan,
 }: {
   windData: WindData | null;
+  timeSpan: string;
 }) {
   if (!windData) return null;
 
@@ -128,12 +130,17 @@ export default function LineChartComponent({
   };
 
   return (
-    <Chart
-      chartType="LineChart"
-      width="100%"
-      height="400px"
-      data={data}
-      options={options}
-    />
+    <div className="relative flex w-full select-none overflow-hidden rounded-lg border border-slate-600">
+      <h1 className="absolute top-5 z-20 w-full text-center text-xl font-bold text-black">
+        Vindgraf siste {timeSpan} minutter
+      </h1>
+      <Chart
+        chartType="LineChart"
+        width="100%"
+        height="400px"
+        data={data}
+        options={options}
+      />
+    </div>
   );
 }
