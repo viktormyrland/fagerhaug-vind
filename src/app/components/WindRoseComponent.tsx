@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { calculateWindRose, type ChartData } from "../utils/WindRoseUtils";
 import { type TimeSpan, type WindData } from "../utils/types";
 import { WindroseChart } from "../utils/windrose/WindRoseChart.component";
+import { Skeleton } from "@mui/material";
 
 const WINDROSE_COLS = ["angle", "0-5", "5-10", "10-14", "14-18", "18+"];
 
@@ -95,7 +96,38 @@ export default function WindRoseComponent({
             responsive={true}
           />
         ) : (
-          <div className="h-[600px] w-[400px]"></div>
+          <div className="relative mb-[20px] h-[550px] w-[400px]">
+            <div className="absolute top-0 flex h-full w-full items-center justify-center">
+              <Skeleton
+                variant="circular"
+                animation="wave"
+                width={400}
+                height={400}
+              />
+            </div>
+            <div className="absolute top-0 flex h-full w-full items-center justify-center">
+              <div className="size-[340px] rounded-full bg-white" />
+            </div>
+            <div className="absolute top-0 flex h-full w-full items-center justify-center">
+              <Skeleton
+                variant="circular"
+                animation="wave"
+                width={280}
+                height={280}
+              />
+            </div>
+            <div className="absolute top-0 flex h-full w-full items-end justify-center pl-[170px]">
+              <div className="h-[130px] w-[120px] rounded-sm bg-white" />
+            </div>
+            <div className="absolute top-0 flex h-full w-full items-end justify-center pl-[170px]">
+              <Skeleton
+                variant="rounded"
+                animation="wave"
+                width={100}
+                height={120}
+              />
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
 import { type WindData } from "../utils/types";
+import { Skeleton } from "@mui/material";
 
 const ANNOTATION_THRESHOLD = 11;
 const ANNOTATION_MIN_MAXGUST_THRESHOLD = 3;
@@ -12,8 +13,31 @@ export default function LineChartComponent({
   windData: WindData | null;
   timeSpan: string;
 }) {
-  if (!windData) return null;
+  return (
+    <div className="relative flex h-[400px] w-full select-none overflow-hidden rounded-lg border border-slate-600">
+      <h1 className="absolute top-5 z-20  w-full text-center text-xl font-bold text-black">
+        Vindgraf siste {timeSpan} minutter
+      </h1>
+      {windData ? (
+        <LineChart windData={windData} />
+      ) : (
+        <div className="relative h-full w-full bg-white">
+          <div className="absolute flex size-full items-end justify-center px-[20px]">
+            <Skeleton height={80} width={"100%"} />
+          </div>
+          <div className="absolute flex size-full items-center justify-start px-[20px]">
+            <Skeleton height={"100%"} width={30} />
+          </div>
+          <div className="absolute flex size-full items-center justify-start pl-[60px] pr-[20px]">
+            <Skeleton height={"100%"} width={"100%"} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
+function LineChart({ windData }: { windData: WindData }) {
   const data = [
     [
       { type: "date", label: "Tid" },
@@ -26,19 +50,6 @@ export default function LineChartComponent({
     ...windData.wind_histogram.map((wei, index) => {
       let annotation = null;
 
-      /**
-       * Data points will have an annotation if;
-       *
-       *    the value equals the max gust
-       *      AND
-       *    the value is above ANNOTATION_MIN_MAXGUST_THRESHOLD
-       * OR
-       *    the value is a peak (higher than the value before and after)
-       *      AND
-       *    the value is above ANNOTATION_THRESHOLD
-       *      AND
-       *    the value is above 80% of the max gust
-       */
       if (
         (wei.max_gust.value === windData.maxGust.value &&
           wei.max_gust.value > ANNOTATION_MIN_MAXGUST_THRESHOLD) ||
@@ -130,17 +141,12 @@ export default function LineChartComponent({
   };
 
   return (
-    <div className="relative flex w-full select-none overflow-hidden rounded-lg border border-slate-600">
-      <h1 className="absolute top-5 z-20 w-full text-center text-xl font-bold text-black">
-        Vindgraf siste {timeSpan} minutter
-      </h1>
-      <Chart
-        chartType="LineChart"
-        width="100%"
-        height="400px"
-        data={data}
-        options={options}
-      />
-    </div>
+    <Chart
+      chartType="LineChart"
+      width="100%"
+      height="400px"
+      data={data}
+      options={options}
+    />
   );
 }
