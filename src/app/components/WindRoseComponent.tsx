@@ -107,7 +107,7 @@ export default function WindRoseComponent({
             responsive={true}
           />
         ) : (
-          <div className="relative mb-[20px] h-[550px] w-[400px]">
+          <div className="relative mb-[20px] h-[540px] w-[400px]">
             <div className="absolute top-0 flex h-full w-full items-center justify-center">
               <Skeleton
                 variant="circular"
