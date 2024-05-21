@@ -28,6 +28,17 @@ export default function WindRoseComponent({
   const [fullscreenMaxDimensions, setFullscreenMaxDimensions] = useState([
     350, 350,
   ]);
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  useEffect(() => {
+    if (windData) {
+      const timer = setTimeout(() => {
+        setShowSkeleton(false);
+      }, 1);
+
+      // Clear the timer if the component unmounts before the timer completes
+      return () => clearTimeout(timer);
+    }
+  }, [windData]);
 
   useEffect(() => {
     setFullscreenMaxDimensions([
@@ -86,7 +97,7 @@ export default function WindRoseComponent({
             </div>
           </div>
         )}
-        {windRoseChartData ? (
+        {windRoseChartData && !showSkeleton ? (
           <WindroseChart
             chartData={windRoseChartData}
             columns={WINDROSE_COLS}

@@ -8,6 +8,7 @@ import GaugeChartComponent from "./components/GaugeChartComponent";
 import WindRoseComponent from "./components/WindRoseComponent";
 import HeaderComponent from "./components/HeaderComponent";
 import { useSearchParams } from "next/navigation";
+import Chart from "react-google-charts";
 
 export default function HomePage() {
   const searchParams = useSearchParams();
@@ -69,6 +70,12 @@ export default function HomePage() {
             setTimeSpan={setTimeSpan}
             refreshWindData={refreshWindData}
           />
+
+          {/* Preload google charts */}
+          <div className="hidden">
+            <Chart />
+          </div>
+
           <div className="flex w-full flex-row flex-wrap items-stretch justify-center gap-3">
             <GaugeChartComponent windData={windData} timeSpan={timeSpan} />
             <WindRoseComponent windData={windData} timeSpan={timeSpan} />
