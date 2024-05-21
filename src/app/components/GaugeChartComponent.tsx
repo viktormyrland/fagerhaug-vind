@@ -17,6 +17,17 @@ export default function GaugeChartComponent({
   const [fullscreenMaxDimensions, setFullscreenMaxDimensions] = useState([
     350, 350,
   ]);
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  useEffect(() => {
+    if (windData) {
+      const timer = setTimeout(() => {
+        setShowSkeleton(false);
+      }, 100);
+
+      // Clear the timer if the component unmounts before the timer completes
+      return () => clearTimeout(timer);
+    }
+  }, [windData]);
 
   useEffect(() => {
     setFullscreenMaxDimensions([
@@ -31,7 +42,7 @@ export default function GaugeChartComponent({
       <h1 className=" mt-4 w-full text-center text-lg font-bold text-black">
         Maks vindkast siste {timeSpan} minutter
       </h1>
-      {windData ? (
+      {windData && !showSkeleton ? (
         <div className="relative flex flex-col items-center">
           <GaugeChart
             windData={windData}
