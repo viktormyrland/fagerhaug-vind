@@ -26,6 +26,7 @@ export default function HomePage() {
       if (previousAttempt && Date.now() - previousAttempt.getTime() < 500)
         return;
       setPreviousAttempt(new Date());
+      setWindData(null);
       getWindData(parseInt(overrideTimespan))
         .then((wd) => {
           if (errorVisible) setErrorVisible(false);
