@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import Dropdown, { type Option } from "react-dropdown";
 import { type TimeSpan } from "../utils/types";
+import { Skeleton } from "@mui/material";
 
 const REFRESH_INTERVAL = 30;
 
@@ -86,13 +87,15 @@ const SecondsSinceUpdateComponent = ({
   return (
     <div className="mr-3 flex w-[12rem] items-center justify-center">
       Oppdateres om
-      {previousAttempt && (
+      {previousAttempt ? (
         <span className="ml-1">
           {secondsSinceUpdate
             ? Math.max(REFRESH_INTERVAL - secondsSinceUpdate, 0)
             : REFRESH_INTERVAL}
           s
         </span>
+      ) : (
+        <Skeleton className="ml-2 w-5" />
       )}
     </div>
   );
