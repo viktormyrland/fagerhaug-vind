@@ -87,7 +87,14 @@ export function WindroseChart(props: ChartPropTypes) {
         "#f4e242",
         "#f4a142",
         "#f44242",
-      ]); */ .range(["#92ddf7", "#42c5f4", "#adf442", "#f4e242", "#f44242"]);
+      ]); */ .range([
+        "#92ddf7",
+        "#42c5f4",
+        "#adf442",
+        "#f4e242",
+        "#f44242",
+        "#990000",
+      ]);
     x.domain(data.map((d) => String(d.angle)));
     // xGroup.domain(columns.map((d) => d));
     y.domain([

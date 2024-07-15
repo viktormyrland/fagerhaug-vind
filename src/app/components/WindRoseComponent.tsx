@@ -4,7 +4,15 @@ import { type TimeSpan, type WindData } from "../utils/types";
 import { WindroseChart } from "../utils/windrose/WindRoseChart.component";
 import { Skeleton } from "@mui/material";
 
-const WINDROSE_COLS = ["angle", "0-5", "5-10", "10-14", "14-18", "18+"];
+const WINDROSE_COLS = [
+  "angle",
+  "0-5",
+  "5-10",
+  "10-14",
+  "14-18",
+  "18-22",
+  "22+",
+];
 
 interface WindRoseProps {
   windData: WindData | null;

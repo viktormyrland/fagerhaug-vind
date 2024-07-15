@@ -3,10 +3,11 @@ type DirectionCount = {
   "5-10": number;
   "10-14": number;
   "14-18": number;
-  "18+": number;
+  "18-22": number;
+  "22+": number;
 };
 
-export type CountClassify = "angle" | "0-7" | "7-14" | "14-18" | "18+";
+export type CountClassify = "angle" | "0-7" | "7-14" | "14-18" | "18-22" | "22+";
 
 export enum Direction {
   N = "N",

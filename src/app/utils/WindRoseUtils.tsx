@@ -9,8 +9,10 @@ const countPush = (count: Count, dir: Direction, speed: number) => {
     count[dir]["10-14"]++;
   } else if (speed < 18) {
     count[dir]["14-18"]++;
+  } else if (speed < 22) {
+    count[dir]["18-22"]++;
   } else {
-    count[dir]["18+"]++;
+    count[dir]["22+"]++;
   }
 };
 
@@ -60,7 +62,7 @@ export function calculateWindRose(data: Data): ChartData[] {
   const count: Count = Object.fromEntries(
     Object.values(Direction).map((dir) => [
       dir,
-      { "0-5": 0, "5-10": 0, "10-14": 0, "14-18": 0, "18+": 0 },
+      { "0-5": 0, "5-10": 0, "10-14": 0, "14-18": 0, "18-22": 0, "22+": 0 },
     ]),
   ) as Count;
 
