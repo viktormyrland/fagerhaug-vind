@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 import Chart from "react-google-charts";
 
 export default function HomePage() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
   const fullscreen = searchParams.get("fullscreen");
   const defaultTimeSpan = searchParams.get("timespan") as TimeSpan;
 
