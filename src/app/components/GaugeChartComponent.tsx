@@ -87,12 +87,12 @@ function GaugeChart({
   const options: ChartWrapperOptions["options"] = {
     width: fullscreen ? fullscreenMaxDimensions[1] : 350,
     height: fullscreen ? fullscreenMaxDimensions[0] : 350,
-    redFrom: 18,
-    redTo: 25,
-    yellowFrom: 14,
-    yellowTo: 18,
-    minorTicks: 5,
-    max: 25,
+    redFrom: 22,
+    redTo: 24,
+    yellowFrom: 18,
+    yellowTo: 22,
+    minorTicks: 6,
+    max: 24,
   };
 
   if (!windData) return null;
