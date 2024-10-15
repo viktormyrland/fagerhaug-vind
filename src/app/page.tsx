@@ -11,14 +11,18 @@ import { useSearchParams } from "next/navigation";
 import Chart from "react-google-charts";
 
 export default function HomePage() {
-  const searchParams = useSearchParams()!;
-  const fullscreen = searchParams.get("fullscreen");
-  const defaultTimeSpan = searchParams.get("timespan") as TimeSpan;
+  const searchParams = useSearchParams();
+  const fullscreen = searchParams ? searchParams.get("fullscreen") : "";
+  const defaultTimeSpan = searchParams
+    ? (searchParams.get("timespan") as TimeSpan)
+    : undefined;
 
   const [windData, setWindData] = useState<WindData | null>(null);
 
   const [timeSpan, setTimeSpan] = useState<TimeSpan>(defaultTimeSpan ?? "10");
-  const [errorVisible, setErrorVisible] = useState(false);
+  const [errorVisible, setErrorVisible] = useState<"error" | "no-data" | null>(
+    null,
+  );
   const [previousAttempt, setPreviousAttempt] = useState<Date | null>(null);
 
   const refreshWindData = useCallback(
@@ -29,12 +33,18 @@ export default function HomePage() {
       setWindData(null);
       getWindData(parseInt(overrideTimespan))
         .then((wd) => {
-          if (errorVisible) setErrorVisible(false);
+          if (errorVisible) setErrorVisible(null);
           setWindData(wd);
+          if (
+            wd.wind_histogram.length == 0 ||
+            wd.maxGust.direction == undefined
+          ) {
+            setErrorVisible("no-data");
+          }
         })
         .catch((e) => {
           console.log(e);
-          setErrorVisible(true);
+          setErrorVisible("error");
         });
     },
     [errorVisible, previousAttempt, timeSpan],
@@ -96,15 +106,27 @@ export default function HomePage() {
           </span>
         </div>
       </div>
-      {errorVisible && (
+      {errorVisible !== null && (
         <div
-          onClick={() => setErrorVisible(false)}
+          onClick={() => setErrorVisible(null)}
           className="absolute z-30 flex h-screen w-screen select-none items-start justify-center pt-56"
         >
           <div className="rounded-lg border-2 border-red-700 bg-red-400 p-5 text-center font-bold text-black">
             Error: Kunne ikke hente vinddata
             <br />
-            Sjekk konsollen for mer info
+            {errorVisible == "no-data" ? (
+              <>
+                <strong className="text-xl">
+                  Problem: odroid i flytårnet er nede! <br />
+                </strong>
+                <br />
+                (Databasen er tilgjenglig, men inneholder ingen data...)
+                <br />
+                Si ifra til en datakyndig i NTNU Fallskjermklubb
+              </>
+            ) : (
+              <>Sjekk konsollen for mer info</>
+            )}
             <br />
             <br />
             Trykk for å prøve på nytt
