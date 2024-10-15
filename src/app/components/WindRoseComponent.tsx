@@ -77,7 +77,7 @@ export default function WindRoseComponent({
         <h1 className="absolute top-5 w-full text-center text-xl font-bold text-black">
           Vindrose siste {timeSpan} minutter
         </h1>
-        {runwayVisible && (
+        {windRoseChartData && !showSkeleton && runwayVisible && (
           <div
             className="absolute left-1/2 top-1/2 z-30 flex h-[70%] w-8 flex-col items-center justify-between bg-black opacity-20"
             style={{
