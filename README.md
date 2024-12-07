@@ -4,7 +4,7 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 
 ## Description
 
-This site displays real-time wind information received from Oppdal Airport, Fagerhaug (ENOP). It connects to an Elasticsearch database using the environment variables provided.
+This site displays real-time wind information received from [Oppdal Airport, Fagerhaug (ENOP)](https://en.wikipedia.org/wiki/Oppdal_Airport,_Fagerhaug). It connects to an Elasticsearch database using the environment variables provided.
 
 ### GET Parameters
 
