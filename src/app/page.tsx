@@ -117,11 +117,11 @@ export default function HomePage() {
             {errorVisible == "no-data" ? (
               <>
                 <strong className="text-xl">
-                  Problem: odroid i flytårnet er nede! <br />
+                  Databasen er tom! <br />
                 </strong>
                 <br />
                 (Databasen er tilgjenglig, men inneholder ingen data...)
-                <br />
+                <br />  
                 Si ifra til en datakyndig i NTNU Fallskjermklubb
               </>
             ) : (
