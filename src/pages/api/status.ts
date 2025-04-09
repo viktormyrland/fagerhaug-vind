@@ -10,7 +10,7 @@ export default function handler(
   res: NextApiResponse<ResponseData>
 ) {
 
-    getWindData(10)
+    getWindData(60)
         .then((wd) => {
             if(wd.wind_histogram.length == 0 || wd.maxGust.direction == undefined){
           res.status(500).json({message: "Empty response from database (last 10 minutes)."})
