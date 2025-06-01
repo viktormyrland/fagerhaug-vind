@@ -18,4 +18,4 @@ export type WindEntryInformation = {
   };
 };
 
-export type TimeSpan = "60" | "30" | "10";
+export type TimeSpan = "180" | "60" | "30" | "10";

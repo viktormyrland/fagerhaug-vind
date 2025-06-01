@@ -33,7 +33,7 @@ export default function HeaderComponent({
       <div className="flex items-center gap-3 rounded pl-3 ">
         Antall minutter:
         <Dropdown
-          options={["10", "30", "60"]}
+          options={["10", "30", "60", "180"]}
           onChange={handleSelectTimespan}
           value={timeSpan}
           placeholder="Select a timespan"
