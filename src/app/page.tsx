@@ -9,6 +9,7 @@ import WindRoseComponent from "./components/WindRoseComponent";
 import HeaderComponent from "./components/HeaderComponent";
 import { useSearchParams } from "next/navigation";
 import Chart from "react-google-charts";
+import Image from "next/image";
 
 export default function HomePage() {
   const searchParams = useSearchParams();
@@ -67,10 +68,11 @@ export default function HomePage() {
   return (
     <main className=" flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
       <div
-        className={`container flex flex-col items-center justify-start gap-12 px-3 py-16`}
+        className={`container flex flex-col items-center justify-start gap-6 px-3 py-10`}
       >
-        <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-[3rem]">
-          Fagerhaug <span className="text-[hsl(280,100%,70%)]">Vind</span>
+        <h1 className="flex gap-2 items-center overflow-hidden text-4xl font-extrabold tracking-tight text-white sm:text-[3rem]">
+                 <span className="text-[hsl(0, 0.00%, 100.00%)] mt-6">vind.</span><Image src={"https://skydiveoppdal.no/wp-content/uploads/2024/05/skydiveoppdal_logo_white.png"} width={300} height={200} style={{width: "100%", height: "auto", maxWidth: "300px", marginTop: "1rem"}} alt="SkydiveOppdal logo"/>
+  
         </h1>
         <div
           className={`flex h-full w-full flex-col items-center justify-start gap-12 ${errorVisible ? "blur" : ""}`}
@@ -92,18 +94,6 @@ export default function HomePage() {
             <WindRoseComponent windData={windData} timeSpan={timeSpan} />
           </div>
           <LineChartComponent windData={windData} timeSpan={timeSpan} />
-          <span className="">
-            Laget med{" "}
-            <span className="heart cursor-default text-red-500">❤</span> av{" "}
-            <a
-              className="hover-animate font-bold text-sky-400 hover:text-sky-300"
-              href="https://github.com/viktormyrland"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Viktor
-            </a>
-          </span>
         </div>
       </div>
       {errorVisible !== null && (

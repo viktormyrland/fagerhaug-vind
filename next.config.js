@@ -5,6 +5,15 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'skydiveoppdal.no',
+        pathname: '/wp-content/**',
+      },
+    ],
+  }};
 
 export default config;
