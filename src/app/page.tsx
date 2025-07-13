@@ -26,6 +26,8 @@ export default function HomePage() {
 	);
 	const [previousAttempt, setPreviousAttempt] = useState<Date | null>(null);
 
+	const hideHeader = searchParams?.get("hideHeader") === "true";
+
 	const refreshWindData = useCallback(
 		(overrideTimespan = timeSpan) => {
 			if (previousAttempt && Date.now() - previousAttempt.getTime() < 500)
@@ -70,32 +72,36 @@ export default function HomePage() {
 			<div
 				className={`container flex flex-col items-center justify-start gap-6 px-3 py-10`}
 			>
-				<h1 className="flex gap-2 items-center overflow-visible text-4xl font-extrabold tracking-tight text-white sm:text-[3rem]">
-					<span className="text-[hsl(0, 0.00%, 100.00%)] mt-6">vind.</span>
-					<Image
-						src={
-							"https://skydiveoppdal.no/wp-content/uploads/2024/05/skydiveoppdal_logo_white.png"
-						}
-						width={300}
-						height={200}
-						style={{
-							width: "auto",
-							height: "auto",
-							maxWidth: "250px",
-							marginTop: "1rem",
-						}}
-						alt="SkydiveOppdal logo"
-					/>
-				</h1>
+				{!hideHeader && (
+					<h1 className="flex gap-2 items-center overflow-visible text-4xl font-extrabold tracking-tight text-white sm:text-[3rem]">
+						<span className="text-[hsl(0, 0.00%, 100.00%)] mt-6">vind.</span>
+						<Image
+							src={
+								"https://skydiveoppdal.no/wp-content/uploads/2024/05/skydiveoppdal_logo_white.png"
+							}
+							width={300}
+							height={200}
+							style={{
+								width: "auto",
+								height: "auto",
+								maxWidth: "250px",
+								marginTop: "1rem",
+							}}
+							alt="SkydiveOppdal logo"
+						/>
+					</h1>
+				)}
 				<div
 					className={`flex h-full w-full flex-col items-center justify-start gap-12 ${errorVisible ? "blur" : ""}`}
 				>
-					<HeaderComponent
-						previousAttempt={previousAttempt}
-						timeSpan={timeSpan}
-						setTimeSpan={setTimeSpan}
-						refreshWindData={refreshWindData}
-					/>
+					<div className={`${hideHeader && "hidden"}`}>
+						<HeaderComponent
+							previousAttempt={previousAttempt}
+							timeSpan={timeSpan}
+							setTimeSpan={setTimeSpan}
+							refreshWindData={refreshWindData}
+						/>
+					</div>
 
 					{/* Preload google charts */}
 					<div className="hidden">
