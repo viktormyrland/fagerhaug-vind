@@ -18,7 +18,6 @@ interface WindRoseProps {
 	windData: WindData | null;
 	timeSpan: TimeSpan;
 	fullscreen?: boolean;
-	z;
 }
 
 export default function WindRoseComponent({
