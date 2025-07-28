@@ -27,7 +27,7 @@ export default function WindRoseComponent({
 }: WindRoseProps) {
 	const [runwayVisible, setRunwayVisible] = useState(true);
 	/* const [windRoseChartData, setWindRoseChartData] = useState<
-    ChartData[] | undefined
+	ChartData[] | undefined
   >(undefined); */
 
 	const direction: number[] = [];
@@ -63,9 +63,9 @@ export default function WindRoseComponent({
 
 	const windRoseChartData: ChartData[] | undefined = windData
 		? calculateWindRose({
-				direction,
-				speed,
-			})
+			direction,
+			speed,
+		})
 		: undefined;
 
 	return (
@@ -85,11 +85,14 @@ export default function WindRoseComponent({
 							transformOrigin: "center",
 						}}
 					>
-						<div className="mt-3 flex w-[80%] flex-row justify-between">
-							<div className="h-10 w-1 bg-white" />
-							<div className="mr-1 h-10 w-1 bg-white" />
-							<div className="h-10 w-1 bg-white" />
-							<div className="h-10 w-1 bg-white" />
+						<div className="mt-3 w-[80%] flex-col gap-1">
+							<div className="flex w-full flex-row justify-between">
+								<div className="h-10 w-1 bg-white" />
+								<div className="mr-1 h-10 w-1 bg-white" />
+								<div className="h-10 w-1 bg-white" />
+								<div className="h-10 w-1 bg-white" />
+							</div>
+							<p style={{ rotate: "180deg", textAlign: "center", fontFamily: "monospace", fontSize: "1.2rem", lineHeight: "40px" }}>25</p>
 						</div>
 
 						<div className="flex w-[70%] flex-row justify-between">
@@ -97,11 +100,14 @@ export default function WindRoseComponent({
 							<div className="h-10 w-1 bg-white" />
 						</div>
 
-						<div className="mb-3 flex w-[80%] flex-row justify-between">
-							<div className="h-10 w-1 bg-white" />
-							<div className="mr-1 h-10 w-1 bg-white" />
-							<div className="h-10 w-1 bg-white" />
-							<div className="h-10 w-1 bg-white" />
+						<div className="mb-3 w-[80%] flex-col gap-1">
+							<p style={{ textAlign: "center", fontFamily: "monospace", fontSize: "1.2rem", lineHeight: "40px" }}>07</p>
+							<div className="flex w-full flex-row justify-between">
+								<div className="h-10 w-1 bg-white" />
+								<div className="mr-1 h-10 w-1 bg-white" />
+								<div className="h-10 w-1 bg-white" />
+								<div className="h-10 w-1 bg-white" />
+							</div>
 						</div>
 					</div>
 				)}
