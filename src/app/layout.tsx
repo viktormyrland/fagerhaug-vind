@@ -1,6 +1,4 @@
 import "~/styles/globals.css";
-
-import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import { Suspense } from "react";
 
@@ -24,7 +22,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <Suspense>{children}</Suspense>
-        <Analytics />
       </body>
     </html>
   );
