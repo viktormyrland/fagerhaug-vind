@@ -110,7 +110,7 @@ export function calculateWindRose(data: Data): ChartData[] {
 }
 
 export function formatComponentTitle(timespan: TimeSpan, title: string): string {
-  let i = parseInt(timespan);
+  const i = parseInt(timespan);
   if (i > 60 && i % 60 == 0) {
     return `${title} siste ${i / 60} timer`
   } else {
