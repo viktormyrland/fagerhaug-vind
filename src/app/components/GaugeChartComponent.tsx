@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
 import { type TimeSpan, type WindData } from "../utils/types";
 import { Skeleton } from "@mui/material";
+import { formatComponentTitle } from "../utils/WindRoseUtils";
 
 interface GaugeChartProps {
   windData: WindData | null;
@@ -29,7 +30,7 @@ export default function GaugeChartComponent({
       className={`relative flex ${fullscreen ? "h-screen" : "w-[400px] border border-slate-600"} select-none flex-col items-center overflow-hidden rounded-lg  bg-white text-black`}
     >
       <h1 className=" mt-4 w-full text-center text-lg font-bold text-black">
-        Maks vindkast siste {timeSpan} minutter
+        {formatComponentTitle(timeSpan, "Maks vindkast")}
       </h1>
       {windData ? (
         <div className="relative flex flex-col items-center">

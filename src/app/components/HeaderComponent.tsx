@@ -17,6 +17,13 @@ interface HeaderProps {
   refreshWindData: (overrideTimespan?: TimeSpan) => void;
 }
 
+const options = [
+  { value: "10", label: "10 min" },
+  { value: "30", label: "30 min" },
+  { value: "60", label: "60 min" },
+  { value: "180", label: "3 timer" },
+];
+
 export default function HeaderComponent({
   timeSpan,
   previousAttempt,
@@ -31,9 +38,9 @@ export default function HeaderComponent({
   return (
     <div className="mx-4 flex flex-row flex-wrap justify-center gap-3 rounded-lg bg-white py-2 text-black">
       <div className="flex items-center gap-3 rounded pl-3 ">
-        Antall minutter:
+        Velg tidsrom:
         <Dropdown
-          options={["10", "30", "60", "180"]}
+          options={options}
           onChange={handleSelectTimespan}
           value={timeSpan}
           placeholder="Select a timespan"

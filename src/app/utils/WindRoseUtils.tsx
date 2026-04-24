@@ -1,3 +1,4 @@
+import { TimeSpan } from "./types";
 import { type Count, Direction } from "./windrose/WindRoseChart.types";
 
 const countPush = (count: Count, dir: Direction, speed: number) => {
@@ -107,3 +108,12 @@ export function calculateWindRose(data: Data): ChartData[] {
 
   return chartData;
 }
+
+export function formatComponentTitle(timespan: TimeSpan, title: string): string {
+  let i = parseInt(timespan);
+  if (i > 60 && i % 60 == 0) {
+    return `${title} siste ${i / 60} timer`
+  } else {
+    return `${title} siste ${i} minutter`
+  }
+} 

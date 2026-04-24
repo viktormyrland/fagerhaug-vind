@@ -1,7 +1,8 @@
 import React from "react";
 import Chart, { type ChartWrapperOptions } from "react-google-charts";
-import { type WindData } from "../utils/types";
+import { TimeSpan, type WindData } from "../utils/types";
 import { Skeleton } from "@mui/material";
+import { formatComponentTitle } from "../utils/WindRoseUtils";
 
 const ANNOTATION_THRESHOLD = 11;
 const ANNOTATION_MIN_MAXGUST_THRESHOLD = 3;
@@ -11,12 +12,12 @@ export default function LineChartComponent({
   timeSpan,
 }: {
   windData: WindData | null;
-  timeSpan: string;
+  timeSpan: TimeSpan;
 }) {
   return (
     <div className="relative flex h-[400px] w-full select-none overflow-hidden rounded-lg border border-slate-600">
       <h1 className="absolute top-5 z-20  w-full text-center text-xl font-bold text-black">
-        Vindgraf siste {timeSpan} minutter
+        {formatComponentTitle(timeSpan, "Vindgraf")}
       </h1>
       {windData ? (
         <LineChart windData={windData} />
@@ -57,10 +58,10 @@ function LineChart({ windData }: { windData: WindData }) {
           wei.max_gust.value >= windData.maxGust.value * 0.8 &&
           (index === 0 ||
             wei.max_gust.value >=
-              windData.wind_histogram[index - 1]!.max_gust.value) &&
+            windData.wind_histogram[index - 1]!.max_gust.value) &&
           (index === windData.wind_histogram.length - 1 ||
             wei.max_gust.value >
-              windData.wind_histogram[index + 1]!.max_gust.value))
+            windData.wind_histogram[index + 1]!.max_gust.value))
       ) {
         annotation = wei.max_gust.value;
       }
