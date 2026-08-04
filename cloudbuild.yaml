@@ -1,0 +1,59 @@
+substitutions:
+  _REGION: europe-north1
+  _REPOSITORY: fagerhaug-vind
+  _SERVICE: fagerhaug-vind
+
+steps:
+  # Pull the previous image so Docker can reuse its layers (npm ci especially).
+  - id: pull-cache
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        docker pull ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:latest || exit 0
+
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --cache-from=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:latest
+      - -t=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$COMMIT_SHA
+      - -t=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:latest
+      - .
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - --all-tags
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}
+
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$COMMIT_SHA
+      - --region=${_REGION}
+      - --platform=managed
+      - --allow-unauthenticated
+      - --port=8080
+      - --cpu=1
+      - --memory=512Mi
+      - --min-instances=0
+      - --max-instances=4
+      - --concurrency=80
+      - --timeout=60s
+      - --set-env-vars=NODE_ENV=production
+      - --set-secrets=API_KEY=fagerhaug-vind-api-key:latest,API_URL=fagerhaug-vind-api-url:latest
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$COMMIT_SHA
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:latest
+
+options:
+  machineType: E2_HIGHCPU_8
+  logging: CLOUD_LOGGING_ONLY

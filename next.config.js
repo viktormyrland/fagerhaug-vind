@@ -6,6 +6,8 @@ await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
 const config = {
+  // Emit a self-contained server bundle for the Cloud Run container image.
+  output: "standalone",
   images: {
     remotePatterns: [
       {
